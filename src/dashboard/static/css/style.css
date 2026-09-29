@@ -1,0 +1,405 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-dark: #06466A;
+  --primary: #0B4F71;
+  --primary-light: #075A8D;
+  --primary-bg: #EAF4FA;
+  --secondary: #4F8F3A;
+  --secondary-bg: #EAF6E7;
+  --bg-main: #F4F7F9;
+  --card-bg: #FFFFFF;
+  --text-main: #17324D;
+  --text-muted: #64748B;
+  --border: #DDE6ED;
+  --warning: #E59A18;
+  --danger: #D64545;
+  --success: #249447;
+  
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --shadow-card: 0 2px 8px rgba(15, 50, 75, 0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', 'Noto Sans Devanagari', system-ui, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.5;
+  font-size: 14px;
+}
+a { text-decoration: none; color: inherit; }
+button, select, input { font-family: inherit; }
+
+/* Header */
+.top-header {
+  background: var(--primary-dark);
+  color: #fff;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+}
+.header-content {
+  max-width: 1440px; margin: 0 auto; width: 100%;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.logo-icon { color: var(--secondary); font-size: 28px; }
+.brand-title { font-size: 24px; font-weight: 700; display: flex; align-items: center; gap: 16px; }
+.brand-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.2); }
+.brand-subtitle { font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.9); }
+
+.system-header-status { display: flex; align-items: center; gap: 16px; font-size: 13px; font-weight: 500; }
+.status-indicator { display: flex; align-items: center; gap: 6px; }
+.status-dot { width: 10px; height: 10px; background: var(--secondary); border-radius: 50%; }
+
+/* Location Bar */
+.location-bar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 24px;
+}
+.location-inner {
+  max-width: 1440px; margin: 0 auto; width: 100%;
+  display: flex; gap: 24px; align-items: center;
+}
+.loc-control { display: flex; align-items: center; gap: 12px; }
+.loc-label { font-weight: 600; font-size: 14px; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
+.loc-select {
+  height: 42px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+  background: var(--card-bg); padding: 0 16px 0 12px; font-size: 14px;
+  color: var(--text-main); min-width: 200px; outline: none; transition: 0.2s;
+}
+.loc-select:focus { border-color: var(--primary); }
+
+/* Navigation */
+.tab-nav-container {
+  max-width: 1440px; margin: 16px auto; padding: 0 24px;
+}
+.tab-nav {
+  display: flex; gap: 8px; background: var(--card-bg);
+  border-radius: var(--radius-md); padding: 6px;
+  box-shadow: var(--shadow-card); border: 1px solid var(--border);
+  overflow-x: auto;
+}
+.tab-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 20px; font-size: 14px; font-weight: 600;
+  color: var(--primary); border-radius: var(--radius-sm);
+  cursor: pointer; transition: 0.2s; white-space: nowrap;
+}
+.tab-link:hover { background: rgba(11,79,113,0.05); }
+.tab-link.active { background: var(--primary); color: #fff; }
+
+/* Main Content */
+.dashboard-container {
+  max-width: 1440px; margin: 0 auto; padding: 0 24px 32px 24px;
+}
+.tab-section { animation: fadeIn 0.3s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Common Card */
+.card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 20px;
+  box-shadow: var(--shadow-card);
+}
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.card-title { font-size: 16px; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+.card-link { font-size: 13px; font-weight: 600; color: var(--primary-light); cursor: pointer; }
+.card-link:hover { text-decoration: underline; }
+
+/* Dashboard Grid */
+.dash-layout { display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap; }
+.dash-left { flex: 1.2; min-width: 300px; display: flex; flex-direction: column; gap: 20px; }
+.dash-right { flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 20px; }
+
+/* Weather Metrics */
+.weather-metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.metric-card { display: flex; align-items: flex-start; gap: 12px; }
+.metric-icon { font-size: 32px; color: var(--primary-light); }
+.metric-val { font-size: 28px; font-weight: 700; color: var(--text-main); line-height: 1.1; margin: 4px 0; }
+.metric-trend { font-size: 12px; font-weight: 600; }
+.trend-up { color: var(--success); }
+.trend-down { color: var(--success); }
+
+/* Hero Downscaling */
+.hero-flow { display: flex; align-items: center; gap: 12px; padding: 12px 0; }
+.flow-box { border-radius: var(--radius-sm); padding: 16px; flex: 1; text-align: center; border: 1px solid var(--border); }
+.flow-box.imd { background: var(--primary-bg); border-color: #CDE2F0; }
+.flow-box.ai { background: #FDF7ED; border-color: #F6E2C3; }
+.flow-box.panchayat { background: var(--secondary-bg); border-color: #D3EBCD; }
+.flow-title { font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 8px; text-transform: uppercase; }
+.flow-val { font-size: 32px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; justify-content: center; gap: 8px; }
+.flow-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.flow-arrow { color: var(--text-muted); font-size: 20px; }
+
+/* 7-Day Forecast */
+.forecast-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
+.fcst-day { padding: 12px 4px; border-right: 1px solid var(--border); }
+.fcst-day:last-child { border-right: none; }
+.fcst-title { font-size: 13px; font-weight: 600; color: var(--text-main); }
+.fcst-date { font-size: 12px; color: var(--text-muted); }
+.fcst-icon { font-size: 24px; margin: 8px 0; color: var(--primary-light); }
+.fcst-rain { font-size: 14px; font-weight: 700; color: var(--primary-light); }
+.fcst-temp { font-size: 13px; color: var(--text-muted); }
+
+/* Map Card */
+.map-controls { display: flex; gap: 12px; align-items: center; }
+.map-controls select { height: 36px; border-radius: 6px; border: 1px solid var(--border); padding: 0 12px; font-size: 13px; }
+.btn-blue { background: var(--primary-light); color: #fff; border: none; height: 36px; padding: 0 16px; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.map-container { height: 430px; width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--border); position: relative; margin-top: 12px; }
+
+/* Bottom Row Cards */
+
+
+.btn-yes { background: var(--success); color: white; border: none; flex: 1; height: 42px; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-no { background: var(--danger); color: white; border: none; flex: 1; height: 42px; border-radius: 6px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+
+/* Popups / Legends */
+.map-legend { position: absolute; bottom: 20px; right: 20px; background: rgba(255,255,255,0.9); padding: 12px; border-radius: 8px; border: 1px solid var(--border); z-index: 1000; font-size: 12px; }
+.legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.legend-color { width: 16px; height: 16px; border: 1px solid rgba(0,0,0,0.1); }
+
+/* Other Components (Buttons etc) */
+.btn-primary { height: 42px; background: var(--primary); color: #fff; border: none; border-radius: var(--radius-sm); padding: 0 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn-secondary { height: 42px; background: var(--card-bg); color: var(--primary); border: 1px solid var(--primary); border-radius: var(--radius-sm); padding: 0 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .dash-layout { flex-direction: column; }
+    .map-container { height: 400px; }
+}
+@media (max-width: 768px) {
+  .weather-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-flow { flex-direction: column; }
+  .flow-arrow { transform: rotate(90deg); }
+  .forecast-grid { overflow-x: auto; display: flex; }
+  .fcst-day { min-width: 80px; }
+    .location-inner { flex-direction: column; align-items: stretch; gap: 8px; }
+}
+@media (max-width: 1024px) {
+  .dash-layout { flex-direction: column; }
+}
+
+
+/* =========================================================
+   PAGE SPECIFIC ALIGNMENTS (ADVISORY, VALIDATION, RISK)
+   ========================================================= */
+
+#advisory-tab, #validation-tab {
+    max-width: 1400px;
+    width: calc(100% - 48px);
+    margin: 0 auto;
+    padding-top: 24px;
+}
+
+@media (max-width: 1024px) {
+    #advisory-tab, #validation-tab { width: calc(100% - 40px); }
+}
+
+@media (max-width: 768px) {
+    #advisory-tab, #validation-tab { width: calc(100% - 32px); }
+}
+
+/* Common Page Headers */
+#advisory-tab > div:first-child, 
+#validation-tab > div:first-child {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+#advisory-tab h1, #validation-tab h1, #risk-tab h1 {
+    font-size: 26px !important;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0;
+    line-height: 1.2;
+}
+
+#advisory-tab > div:first-child span, 
+#validation-tab > div:first-child span {
+    font-size: 15px;
+    color: var(--text-muted);
+}
+
+/* =========================================================
+   ADVISORY PAGE
+   ========================================================= */
+
+#advisory-tab .dash-layout {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+#advisory-tab .dash-left {
+    flex: 1;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#advisory-tab .dash-right {
+    flex: 2;
+    min-width: 400px;
+}
+
+#advisory-tab input, #advisory-tab select, #advisory-tab button {
+    height: 44px !important;
+    border-radius: 6px !important;
+    font-size: 14px !important;
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   VALIDATION PAGE
+   ========================================================= */
+
+#validation-tab .weather-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+#validation-tab .metric-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    height: 100%;
+}
+
+#validation-tab .dash-layout {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+#validation-tab .dash-left {
+    flex: 1.5;
+    min-width: 400px;
+}
+
+#validation-tab .dash-right {
+    flex: 1;
+    min-width: 350px;
+}
+
+/* Validation Table */
+#validation-tab table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#validation-tab th {
+    padding: 12px;
+    background: #F4F7F9;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+}
+
+#validation-tab td {
+    padding: 12px;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+#validation-tab tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* =========================================================
+   CROP RISK PAGE
+   ========================================================= */
+
+#risk-tab .dash-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+
+
+#risk-tab .risk-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+    #advisory-tab .dash-layout,
+    #validation-tab .dash-layout {
+        flex-direction: column;
+    }
+    
+}
+
+
+/* Advisory Result Grid Layout (No HTML changes needed) */
+#advResult {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "crop alert"
+        "weather alert"
+        "trend risk"
+        "actions actions"
+        "avoid avoid";
+    gap: 24px;
+    align-items: start;
+}
+#advResult > div:nth-child(1) { grid-area: alert; }
+#advResult > div:nth-child(2) { grid-area: crop; }
+#advResult > div:nth-child(3) { grid-area: weather; }
+#advResult > div:nth-child(4) { grid-area: trend; }
+#advResult > div:nth-child(5) { grid-area: risk; }
+#advResult > div:nth-child(6) { grid-area: actions; }
+#advResult > div:nth-child(7) { grid-area: avoid; }
+
+@media (max-width: 1024px) {
+    #advResult {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "alert"
+            "crop"
+            "weather"
+            "trend"
+            "risk"
+            "actions"
+            "avoid";
+    }
+}
+
+/* 4. ADVISORY ACTION CARDS */
+/* "All recommendation cards must: have equal spacing, align to the same grid" */
+#advResActions {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px !important;
+}
+
+/* Ensure the generated action cards (which are injected via JS) match heights */
+#advResActions > div {
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 400px) { #global-chatbot-popup { width: calc(100vw - 48px) !important; right: 24px !important; } }

@@ -1,0 +1,22 @@
+[
+  {
+    "gp_code": "2731002008",
+    "gp_name": "Tamhini",
+    "did_rain": true,
+    "intensity": "Moderate",
+    "actual_rainfall_mm": 32.0,
+    "forecast_useful": true,
+    "comments": "Test",
+    "timestamp": "2026-09-28T07:58:19.280801"
+  },
+  {
+    "gp_code": "185374",
+    "gp_name": "DANDAWADI",
+    "did_rain": true,
+    "intensity": null,
+    "actual_rainfall_mm": null,
+    "forecast_useful": true,
+    "comments": "",
+    "timestamp": "2026-09-29T04:24:36.680Z"
+  }
+]

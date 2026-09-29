@@ -1,0 +1,44 @@
+import os
+
+FILE = r"src\dashboard\static\js\tabs\advisory.js"
+with open(FILE, "r", encoding="utf-8") as f:
+    code = f.read()
+
+# Replace #advResult flex-direction:column with grid
+# It was: <div id="advResult" style="display:none;flex-direction:column;gap:24px;">
+# We want it to have a top section (2 columns) and a bottom section (actions)
+
+code = code.replace('<div id="advResult" style="display:none;flex-direction:column;gap:24px;">',
+                    '<div id="advResult" style="display:none;flex-direction:column;gap:24px;">\n<div class="adv-result-top-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">')
+
+# We need to wrap the first 3 cards (Alert, Crop Cond, Weather Cond) into this grid.
+# The layout they want:
+# LEFT: Current weather/context, Crop/stage information
+# RIGHT: Alert/severity, Key recommendation
+# Wait, currently the order is:
+# 1. Alert (advStatusIcon, etc)
+# 2. Crop Condition (advResCropCondition)
+# 3. Weather Condition & Impact (advResRain, etc, advResWeatherImpact)
+# 4. Rules Applied (if any)
+# 5. Generated Recommendations (advResActions)
+
+# Let's just reorganize it in the javascript renderResult function! No, the DOM is static.
+# I'll just change the CSS to handle it. 
+
+CSS = """
+/* Advisory Result Grid */
+#advResult {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "weather alert"
+        "crop actions"
+        "rules rules";
+    gap: 24px;
+}
+#advResult > div:nth-child(1) { grid-area: alert; }
+#advResult > div:nth-child(2) { grid-area: crop; }
+#advResult > div:nth-child(3) { grid-area: weather; }
+#advResult > div:nth-child(4) { grid-area: actions; grid-column: 1 / -1; }
+"""
+# Wait, child 4 is advResActions ? Let's check `advisory.js` child order.

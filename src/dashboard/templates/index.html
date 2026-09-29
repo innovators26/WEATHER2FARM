@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather2Farm - Panchayat Weather Intelligence</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  
+  <header class="top-header">
+    <div class="header-content">
+      <div class="brand">
+        <i class="ph-fill ph-leaf logo-icon"></i>
+        <div class="brand-title"><span data-i18n="app.title">Weather2Farm</span> <div class="brand-divider"></div> <span class="brand-subtitle" data-i18n="app.subtitle">Panchayat Weather Intelligence</span></div>
+      </div>
+            <div class="system-header-status">
+        <div class="status-indicator"><span class="status-dot"></span> <span data-i18n="status.operational">System Operational</span></div>
+        <div class="brand-divider"></div>
+        <div id="lastUpdated">Loading...</div>
+        <div class="brand-divider"></div>
+        <select id="langSelect" onchange="window.setAppLanguage(this.value)" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.3); border-radius:4px; padding:2px 6px; font-size:12px; cursor:pointer; outline:none;">
+          <option value="en" style="color:#000;">English</option>
+          <option value="hi" style="color:#000;">हिन्दी</option>
+          <option value="mr" style="color:#000;">मराठी</option>
+        </select>
+      </div>
+    </div>
+    </div>
+  </header>
+
+  <div class="location-bar">
+    <div class="location-inner">
+      <div class="loc-control">
+        <div class="loc-label"><i class="ph-fill ph-map-pin"></i> <span data-i18n="loc.district">District</span></div>
+        <select id="districtSelect" class="loc-select" data-i18n="loc.select_district"><option value="Pune">Pune</option></select>
+      </div>
+      <div class="loc-control">
+        <div class="loc-label"><i class="ph-fill ph-buildings"></i> <span data-i18n="loc.block">Block</span></div>
+        <select id="blockSelect" class="loc-select" data-i18n="loc.select_block"><option value="">-- Select Block --</option></select>
+      </div>
+      <div class="loc-control">
+        <div class="loc-label"><i class="ph-fill ph-users"></i> <span data-i18n="loc.panchayat">Panchayat</span></div>
+        <select id="panchayatSelect" class="loc-select" data-i18n="loc.select_panchayat"><option value="">-- Select Panchayat --</option></select>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-nav-container">
+    <nav class="tab-nav">
+      <a href="#dashboard" class="tab-link active" data-tab="dashboard"><i class="ph-fill ph-house"></i> <span data-i18n="nav.dashboard">Dashboard</span></a>
+      <a href="#map" class="tab-link" data-tab="map"><i class="ph-fill ph-map-trifold"></i> <span data-i18n="nav.map">Weather Map</span></a>
+      <a href="#downscaling" class="tab-link" data-tab="downscaling"><i class="ph-fill ph-gear"></i> <span data-i18n="nav.downscaling">AI Downscaling</span></a>
+      <a href="#advisory" class="tab-link" data-tab="advisory"><i class="ph-fill ph-leaf"></i> <span data-i18n="nav.advisory">Crop Advisory</span></a>
+      <a href="#validation" class="tab-link" data-tab="validation"><i class="ph-fill ph-chart-bar"></i> <span data-i18n="nav.validation">Validation</span></a>
+      <a href="#risk" class="tab-link" data-tab="risk"><i class="ph-fill ph-warning"></i> <span data-i18n="nav.risk">Crop Risk</span></a>
+      <a href="#feedback" class="tab-link" data-tab="feedback"><i class="ph-fill ph-chat-circle-text"></i> <span data-i18n="nav.feedback">Feedback</span></a>
+    </nav>
+  </div>
+
+  <main class="dashboard-container">
+    <section id="dashboard-tab" class="tab-section"></section>
+    <section id="map-tab" class="tab-section" style="display:none;"></section>
+    <section id="downscaling-tab" class="tab-section" style="display:none;"></section>
+    <section id="advisory-tab" class="tab-section" style="display:none;"></section>
+    <section id="validation-tab" class="tab-section" style="display:none;"></section>
+    <section id="risk-tab" class="tab-section" style="display:none;"></section>
+    <section id="feedback-tab" class="tab-section" style="display:none;"></section>
+  
+    <!-- Global Chatbot -->
+    <div id="global-chatbot-btn" onclick="window.toggleGlobalChatbot()" style="position:fixed; right:24px; bottom:24px; width:56px; height:56px; border-radius:50%; background:var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.15); cursor:pointer; z-index:9999; transition:0.2s;">
+      <i class="ph-fill ph-chat-circle-dots" style="font-size:28px;"></i>
+    </div>
+
+    <div id="global-chatbot-popup" style="display:none; position:fixed; right:24px; bottom:90px; width:360px; max-height:520px; background:#fff; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.15); z-index:9999; flex-direction:column; overflow:hidden; border:1px solid var(--border);">
+      <div style="background:var(--primary-dark); color:#fff; padding:16px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <i class="ph-fill ph-robot" style="font-size:20px;"></i>
+          <span style="font-weight:600; font-size:15px;" data-i18n="chat.title">Weather2Farm AI</span>
+        </div>
+        <i class="ph ph-x" id="global-chatbot-close" onclick="window.closeGlobalChatbot()" style="cursor:pointer; font-size:20px;"></i>
+      </div>
+      <div style="background:#F8FAFC; padding:8px 16px; border-bottom:1px solid var(--border); font-size:12px; color:var(--text-muted); display:flex; gap:6px; align-items:center;">
+        <i class="ph-fill ph-map-pin"></i> Context: <strong id="chat-context-loc">Loading...</strong>
+      </div>
+      <div id="global-chatbot-messages" style="flex:1; padding:16px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; background:#fff; height:320px;">
+        <div style="background:var(--primary-bg); padding:12px; border-radius:8px; font-size:13px; color:var(--text-main); border-bottom-left-radius:0; max-width:85%; line-height:1.4;">
+          Hello! I am the Weather2Farm AI. How can I help you with your crop or weather decisions today?
+        </div>
+      </div>
+      <div style="padding:12px; border-top:1px solid var(--border); display:flex; gap:8px; background:#fff;">
+        <input type="text" id="global-chatbot-input" onkeypress="window.handleGlobalChatKey(event)" placeholder="Type your question..." style="flex:1; height:40px; border-radius:20px; border:1px solid #CBD5E1; padding:0 16px; font-size:13px; outline:none;">
+        <button id="global-chatbot-send" onclick="window.sendGlobalChatMessage()" style="height:40px; width:40px; border-radius:50%; background:var(--primary); color:#fff; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+          <i class="ph-fill ph-paper-plane-right"></i>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script type="module" src="/static/js/i18n.js"></script>
+  <script type="module" src="/static/js/app.js"></script>
+  
+</body>
+</html>
